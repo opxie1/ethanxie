@@ -1,9 +1,8 @@
 import Hero from "@/components/ui/animated-shader-hero";
-import { SplineScene } from "@/components/ui/splite";
 import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
 import DisplayCards from "@/components/ui/display-cards";
-import { Briefcase, GraduationCap, Award, Code, Mail, Globe, FlaskConical, TrendingUp } from "lucide-react";
+import { Briefcase, GraduationCap, Award, Code, Mail, Globe, FlaskConical, TrendingUp, Terminal } from "lucide-react";
 import { motion } from "framer-motion";
 
 const experienceCards = [
