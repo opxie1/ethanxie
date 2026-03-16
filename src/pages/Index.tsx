@@ -121,7 +121,7 @@ const Index = () => {
         <Hero
           headline={{ line1: "Ethan Xie", line2: "Finance & Engineering" }}
           subtitle="Building at the intersection of quantitative finance, machine learning, and design. Researcher. Builder. Investor."
-          trustBadge={{ text: "Open to opportunities", icons: ["✦"] }}
+          trustBadge={{ text: "Delaware, USA", icons: ["📍"] }}
           buttons={{
             primary: { text: "View Experience", onClick: () => scrollToSection("experience") },
             secondary: { text: "Contact Me", onClick: () => scrollToSection("contact") },
