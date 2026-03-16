@@ -1,46 +1,80 @@
 import Hero from "@/components/ui/animated-shader-hero";
-import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
-import DisplayCards from "@/components/ui/display-cards";
-import { Briefcase, GraduationCap, Award, Code, Mail, Globe, FlaskConical, TrendingUp, Terminal } from "lucide-react";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import ContainerScroll from "@/components/ui/container-scroll";
+import {
+  Briefcase, GraduationCap, Award, Mail, Globe,
+  FlaskConical, TrendingUp, Code, DollarSign, Terminal,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
-const experienceCards = [
+const experienceTimeline = [
   {
-    title: "Research Intern",
-    description: "Collaborating with Prof. Amuedo-Dorantes on quasi-experimental labor economics research using staggered DiD methodology.",
+    id: 1,
+    title: "Research Intern — UC Merced",
     date: "Feb 2026 — Present",
-    icon: <FlaskConical className="size-4 text-primary" />,
-    iconClassName: "text-primary",
-    titleClassName: "text-primary",
-    className:
-      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+    content:
+      "Collaborating with Prof. Amuedo-Dorantes on quasi-experimental labor economics research evaluating safe-zone policy effects on K–12 academic outcomes using staggered difference-in-differences methodology.",
+    category: "Research",
+    icon: FlaskConical,
+    relatedIds: [2],
+    status: "in-progress" as const,
+    energy: 85,
   },
   {
-    title: "Technical Lead — Princeton",
-    description: "Developing a wearable fall-protection system using ML, accelerometers & gyroscopes. Awarded $1,500 NSF grant.",
-    date: "Oct 2025 — Present",
-    icon: <Code className="size-4 text-primary" />,
-    iconClassName: "text-primary",
-    titleClassName: "text-primary",
-    className:
-      "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
-  },
-  {
+    id: 2,
     title: "Research Assistant — DSU",
-    description: "Contributing to PhD-level corporate finance research using Bloomberg Terminal, SQL, R, and Python.",
     date: "Jan 2026 — Present",
-    icon: <TrendingUp className="size-4 text-primary" />,
-    iconClassName: "text-primary",
-    titleClassName: "text-primary",
-    className:
-      "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+    content:
+      "Contributing to PhD-level corporate finance research under Dr. Zi Ning, including analysis of fixed income securities using Bloomberg Terminal, SQL, R, and Python.",
+    category: "Research",
+    icon: TrendingUp,
+    relatedIds: [1, 3],
+    status: "in-progress" as const,
+    energy: 80,
+  },
+  {
+    id: 3,
+    title: "Technical Lead — Princeton",
+    date: "Oct 2025 — Present",
+    content:
+      "Developing a wearable fall-protection system for seniors using ML, accelerometers & gyroscopes. Awarded a $1,500 NSF grant. Currently prototyping the device.",
+    category: "Engineering",
+    icon: Code,
+    relatedIds: [2, 4],
+    status: "in-progress" as const,
+    energy: 90,
+  },
+  {
+    id: 4,
+    title: "Co-President — Investment Club",
+    date: "Dec 2025 — Present",
+    content:
+      "Leading a club with 200+ members. Teaching stock market fundamentals, diversification & risk management, stock pitches, and running paper trading competitions on Investopedia.",
+    category: "Leadership",
+    icon: DollarSign,
+    relatedIds: [3, 5],
+    status: "in-progress" as const,
+    energy: 75,
+  },
+  {
+    id: 5,
+    title: "BPA — 2nd Place International",
+    date: "May 2025",
+    content:
+      "Placed 2nd out of 250+ teams internationally in Financial Portfolio Management at Business Professionals of America.",
+    category: "Award",
+    icon: Award,
+    relatedIds: [4],
+    status: "completed" as const,
+    energy: 100,
   },
 ];
 
 const skills = [
   "Python", "R", "SQL", "TypeScript", "React", "Next.js",
   "Tailwind CSS", "TensorFlow", "PyTorch", "LaTeX", "OCaml", "Kotlin",
+  "Excel", "Pandas", "NumPy", "Matplotlib",
 ];
 
 const awards = [
@@ -58,6 +92,11 @@ const awards = [
     title: "Bloomberg Finance Fundamentals (BFF) Certification",
     description: "Key concepts in finance including investing, risk/reward, and portfolio management.",
     date: "Nov 2025",
+  },
+  {
+    title: "Introduction to MS Excel — Simplilearn",
+    description: "Foundational to advanced skills on Microsoft Excel (7hrs).",
+    date: "Jan 2026",
   },
 ];
 
@@ -90,140 +129,103 @@ const Index = () => {
         />
       </section>
 
-      {/* 3D Interactive Section */}
-      <section className="py-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          className="space-y-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2
-            variants={fadeInUp}
-            custom={0}
-            className="text-4xl font-bold tracking-tight sm:text-5xl"
-          >
-            Interactive <span className="text-muted-foreground">Systems</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            custom={1}
-            className="text-muted-foreground text-lg max-w-md leading-relaxed"
-          >
-            From wearable fall-protection devices to labor economics research — I build systems that bridge hardware, data, and design.
-          </motion.p>
-          <motion.div variants={fadeInUp} custom={2} className="flex flex-wrap gap-3 pt-4">
-            {["Machine Learning", "WebGL", "Data Analysis"].map((tag) => (
-              <span key={tag} className="tag-pill">{tag}</span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <Card className="relative h-[500px] w-full bg-card/50 border-border overflow-hidden group flex items-center justify-center">
-          <Spotlight className="from-primary/20 via-primary/10 to-transparent" size={400} />
-          <div className="relative z-10 flex flex-col items-center gap-6 p-8">
-            <Terminal className="size-16 text-primary opacity-60" />
-            <div className="font-mono text-sm text-muted-foreground text-center space-y-2">
-              <p><span className="text-primary">const</span> skills = [</p>
-              <p className="pl-4">"ML", "Finance", "Full-Stack",</p>
-              <p className="pl-4">"Data Science", "Research"</p>
-              <p>];</p>
-              <p className="mt-4"><span className="text-primary">export default</span> skills;</p>
+      {/* Experience — Radial Orbital Timeline with ContainerScroll */}
+      <section id="experience" className="py-16 px-6 bg-secondary/20">
+        <ContainerScroll
+          titleComponent={
+            <div className="mb-8">
+              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
+                Experience
+              </h2>
+              <div className="gradient-line mt-4" />
+              <p className="text-muted-foreground mt-4 text-lg">
+                Click on a node to explore — they're all connected.
+              </p>
             </div>
-          </div>
-        </Card>
+          }
+        >
+          <RadialOrbitalTimeline timelineData={experienceTimeline} />
+        </ContainerScroll>
       </section>
 
-      {/* Experience */}
-      <section id="experience" className="py-32 px-6 bg-secondary/20">
-        <div className="max-w-7xl mx-auto">
+      {/* Education & Leadership */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div
-            className="mb-20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
+            variants={fadeInUp}
+            custom={0}
           >
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
-            <div className="gradient-line" />
+            <div className="glass-card p-8 h-full">
+              <GraduationCap className="size-6 mb-4 text-primary" />
+              <h3 className="text-xl font-semibold mb-4">Education</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-foreground font-medium">Charter School of Wilmington</p>
+                  <p className="text-sm text-muted-foreground font-mono">GPA: 4.0/4.0 · Aug 2025 – Jun 2029</p>
+                </div>
+                <div>
+                  <p className="text-foreground font-medium">University of Delaware</p>
+                  <p className="text-sm text-muted-foreground font-mono">FINC200 Grade: 97% · Summer 2025</p>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
-            <div className="lg:w-1/2">
-              <DisplayCards cards={experienceCards} />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            custom={1}
+          >
+            <div className="glass-card p-8 h-full">
+              <Briefcase className="size-6 mb-4 text-primary" />
+              <h3 className="text-xl font-semibold mb-4">Leadership & Activities</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Co-President of Investment Club (200+ members), Freshmen Representative, CureQuest Outreach Director, Orchestra Concertmaster, Mock Trial, CS Teaching Assistant, Math League, Media Team Co-Founder.
+              </p>
             </div>
-
-            <motion.div
-              className="lg:w-1/3 space-y-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <motion.div variants={fadeInUp} custom={0}>
-                <div className="glass-card p-8">
-                  <GraduationCap className="size-6 mb-4 text-primary" />
-                  <h3 className="text-xl font-semibold mb-2">Education</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-foreground font-medium">Charter School of Wilmington</p>
-                      <p className="text-sm text-muted-foreground font-mono">GPA: 4.0/4.0 · Aug 2025 – Jun 2029</p>
-                    </div>
-                    <div>
-                      <p className="text-foreground font-medium">University of Delaware</p>
-                      <p className="text-sm text-muted-foreground font-mono">FINC200 Grade: 97% · Summer 2025</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div variants={fadeInUp} custom={1}>
-                <div className="glass-card p-8">
-                  <Briefcase className="size-6 mb-4 text-primary" />
-                  <h3 className="text-xl font-semibold mb-2">Leadership</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Co-President of Investment Club (200+ members), Freshmen Representative, CureQuest Outreach Director, Orchestra Concertmaster.
-                  </p>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Skills */}
-      <section className="py-32 px-6">
+      <section className="py-32 px-6 bg-secondary/20">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="mb-16"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+          <ContainerScroll
+            titleComponent={
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold tracking-tight mb-4 text-foreground">Technical Skills</h2>
+                <div className="gradient-line" />
+              </div>
+            }
           >
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Technical Skills</h2>
-            <div className="gradient-line" />
-          </motion.div>
-
-          <motion.div
-            className="flex flex-wrap gap-3"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {skills.map((skill, i) => (
-              <motion.span
-                key={skill}
-                variants={fadeInUp}
-                custom={i}
-                className="tag-pill text-foreground hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
-              >
-                {skill}
-              </motion.span>
-            ))}
-          </motion.div>
+            <motion.div
+              className="flex flex-wrap gap-3 justify-center py-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {skills.map((skill, i) => (
+                <motion.span
+                  key={skill}
+                  variants={fadeInUp}
+                  custom={i}
+                  className="tag-pill text-foreground hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </motion.div>
+          </ContainerScroll>
         </div>
       </section>
 
       {/* Awards */}
-      <section className="py-32 px-6 bg-secondary/20">
+      <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="mb-16"
@@ -235,7 +237,7 @@ const Index = () => {
             <div className="gradient-line" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {awards.map((award, i) => (
               <motion.div
                 key={award.title}
@@ -257,7 +259,7 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-32 px-6">
+      <section id="contact" className="py-32 px-6 bg-secondary/20">
         <div className="max-w-xl mx-auto text-center">
           <motion.div
             initial="hidden"
