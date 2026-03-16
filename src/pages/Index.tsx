@@ -1,9 +1,8 @@
 import Hero from "@/components/ui/animated-shader-hero";
-import { SplineScene } from "@/components/ui/splite";
 import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
 import DisplayCards from "@/components/ui/display-cards";
-import { Briefcase, GraduationCap, Award, Code, Mail, Globe, FlaskConical, TrendingUp } from "lucide-react";
+import { Briefcase, GraduationCap, Award, Code, Mail, Globe, FlaskConical, TrendingUp, Terminal } from "lucide-react";
 import { motion } from "framer-motion";
 
 const experienceCards = [
@@ -120,12 +119,18 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        <Card className="relative h-[500px] w-full bg-card/50 border-border overflow-hidden group">
+        <Card className="relative h-[500px] w-full bg-card/50 border-border overflow-hidden group flex items-center justify-center">
           <Spotlight className="from-primary/20 via-primary/10 to-transparent" size={400} />
-          <SplineScene
-            scene="https://prod.spline.design/kZqon7WDbTh8Xc8z/scene.splinecode"
-            className="w-full h-full"
-          />
+          <div className="relative z-10 flex flex-col items-center gap-6 p-8">
+            <Terminal className="size-16 text-primary opacity-60" />
+            <div className="font-mono text-sm text-muted-foreground text-center space-y-2">
+              <p><span className="text-primary">const</span> skills = [</p>
+              <p className="pl-4">"ML", "Finance", "Full-Stack",</p>
+              <p className="pl-4">"Data Science", "Research"</p>
+              <p>];</p>
+              <p className="mt-4"><span className="text-primary">export default</span> skills;</p>
+            </div>
+          </div>
         </Card>
       </section>
 
