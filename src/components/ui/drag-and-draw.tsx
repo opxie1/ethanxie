@@ -4,7 +4,7 @@ import { useDrag } from '@visx/drag';
 import { curveBasis } from '@visx/curve';
 import { LinearGradient } from '@visx/gradient';
 
-type Point = { x: number; y: number }[];
+type Point = { x: number; y: number };
 type Line = Point[];
 type Lines = Line[];
 
