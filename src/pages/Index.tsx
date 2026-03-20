@@ -1,10 +1,10 @@
 import Hero from "@/components/ui/animated-shader-hero";
-import { Spotlight } from "@/components/ui/spotlight";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import ContainerScroll from "@/components/ui/container-scroll";
+import { DragAndDraw } from "@/components/ui/drag-and-draw";
+import { SmokeCard } from "@/components/ui/smoke-card";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
-  FlaskConical, TrendingUp, Code, DollarSign, Terminal,
+  FlaskConical, TrendingUp, Code, DollarSign,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -129,23 +129,26 @@ const Index = () => {
         />
       </section>
 
-      {/* Experience — Radial Orbital Timeline with ContainerScroll */}
-      <section id="experience" className="py-16 px-6 bg-secondary/20">
-        <ContainerScroll
-          titleComponent={
-            <div className="mb-8">
-              <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
-                Experience
-              </h2>
-              <div className="gradient-line mt-4" />
-              <p className="text-muted-foreground mt-4 text-lg">
-                Click on a node to explore — they're all connected.
-              </p>
-            </div>
-          }
-        >
+      {/* Experience — Radial Orbital Timeline */}
+      <section id="experience" className="py-24 px-6 bg-secondary/20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
+              Experience
+            </h2>
+            <div className="gradient-line mt-4 max-w-xs mx-auto" />
+            <p className="text-muted-foreground mt-4 text-lg">
+              Click on a node to explore — they're all connected.
+            </p>
+          </motion.div>
           <RadialOrbitalTimeline timelineData={experienceTimeline} />
-        </ContainerScroll>
+        </div>
       </section>
 
       {/* Education & Leadership */}
@@ -195,32 +198,32 @@ const Index = () => {
       {/* Skills */}
       <section className="py-32 px-6 bg-secondary/20">
         <div className="max-w-7xl mx-auto">
-          <ContainerScroll
-            titleComponent={
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold tracking-tight mb-4 text-foreground">Technical Skills</h2>
-                <div className="gradient-line" />
-              </div>
-            }
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
-            <motion.div
-              className="flex flex-wrap gap-3 justify-center py-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {skills.map((skill, i) => (
-                <motion.span
-                  key={skill}
-                  variants={fadeInUp}
-                  custom={i}
-                  className="tag-pill text-foreground hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </motion.div>
-          </ContainerScroll>
+            <h2 className="text-3xl font-bold tracking-tight mb-4 text-foreground">Technical Skills</h2>
+            <div className="gradient-line" />
+          </motion.div>
+          <motion.div
+            className="flex flex-wrap gap-3 justify-center py-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {skills.map((skill, i) => (
+              <motion.span
+                key={skill}
+                variants={fadeInUp}
+                custom={i}
+                className="tag-pill text-foreground hover:border-primary/50 hover:bg-primary/10 transition-colors cursor-default"
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -255,6 +258,56 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Interactive Canvas — Drag & Draw */}
+      <section className="py-24 px-6 bg-secondary/20">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            className="mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">Draw Something</h2>
+            <p className="text-muted-foreground text-sm">Click and drag on the canvas below.</p>
+          </motion.div>
+          <motion.div
+            className="glass-card overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <DragAndDraw width={900} height={400} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Smoke Effect Card */}
+      <section className="py-24 px-6">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            className="mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">Smoke Effect</h2>
+            <p className="text-muted-foreground text-sm">Hover over the card to generate particles.</p>
+          </motion.div>
+          <motion.div
+            className="glass-card h-64 overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <SmokeCard />
+          </motion.div>
         </div>
       </section>
 
