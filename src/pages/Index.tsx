@@ -1,12 +1,28 @@
+import React from "react";
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { DragAndDraw } from "@/components/ui/drag-and-draw";
 import { SmokeCard } from "@/components/ui/smoke-card";
+import { SplineScene } from "@/components/ui/splite";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
   FlaskConical, TrendingUp, Code, DollarSign,
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Error boundary to prevent blank screen crashes
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback?: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error: any) { console.error("Section error:", error); }
+  render() {
+    if (this.state.hasError) return this.props.fallback || null;
+    return this.props.children;
+  }
+}
 
 const experienceTimeline = [
   {
@@ -118,15 +134,27 @@ const Index = () => {
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
-        <Hero
-          headline={{ line1: "Ethan Xie", line2: "Finance & Engineering" }}
-          subtitle="Building at the intersection of quantitative finance, machine learning, and design. Researcher. Builder. Investor."
-          trustBadge={{ text: "Delaware, USA", icons: ["📍"] }}
-          buttons={{
-            primary: { text: "View Experience", onClick: () => scrollToSection("experience") },
-            secondary: { text: "Contact Me", onClick: () => scrollToSection("contact") },
-          }}
-        />
+        <ErrorBoundary fallback={<div className="h-screen bg-background" />}>
+          <Hero
+            headline={{ line1: "Ethan Xie", line2: "Finance & Engineering" }}
+            subtitle="Building at the intersection of quantitative finance, machine learning, and design. Researcher. Builder. Investor."
+            trustBadge={{ text: "Delaware, USA", icons: ["📍"] }}
+            buttons={{
+              primary: { text: "View Experience", onClick: () => scrollToSection("experience") },
+              secondary: { text: "Contact Me", onClick: () => scrollToSection("contact") },
+            }}
+          />
+        </ErrorBoundary>
+      </section>
+
+      {/* Spline 3D Scene */}
+      <section className="h-screen w-full overflow-hidden">
+        <ErrorBoundary fallback={<div className="h-screen bg-background" />}>
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
+        </ErrorBoundary>
       </section>
 
       {/* Experience — Radial Orbital Timeline */}
@@ -147,7 +175,9 @@ const Index = () => {
               Click on a node to explore — they're all connected.
             </p>
           </motion.div>
-          <RadialOrbitalTimeline timelineData={experienceTimeline} />
+          <ErrorBoundary>
+            <RadialOrbitalTimeline timelineData={experienceTimeline} />
+          </ErrorBoundary>
         </div>
       </section>
 
@@ -281,7 +311,9 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <DragAndDraw width={900} height={400} />
+            <ErrorBoundary>
+              <DragAndDraw width={900} height={400} />
+            </ErrorBoundary>
           </motion.div>
         </div>
       </section>
