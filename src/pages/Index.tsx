@@ -310,7 +310,7 @@ const Index = () => {
             </p>
             <a
               href="/Ethan_Xie_Resume.pdf"
-              download
+              download="Ethan Xie.pdf"
               className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-foreground text-background font-medium hover:opacity-90 transition-opacity"
             >
               <Download className="size-4" /> Download PDF

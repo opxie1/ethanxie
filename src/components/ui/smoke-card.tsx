@@ -14,10 +14,10 @@ class Particle {
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 5 + 2;
-    this.speedX = Math.random() * 2 - 1;
-    this.speedY = -Math.random() * 3 - 1;
-    this.life = 100;
+    this.size = Math.random() * 15 + 8;
+    this.speedX = Math.random() * 3 - 1.5;
+    this.speedY = -Math.random() * 4 - 2;
+    this.life = 120;
     this.initialSize = this.size;
   }
 
@@ -55,8 +55,12 @@ const GlobalSmoke = () => {
         .map(particle => {
           particle.update();
           if (particle.size > 0) {
-            const opacity = particle.life / 100;
-            ctx.fillStyle = `rgba(128, 128, 128, ${opacity})`;
+            const opacity = (particle.life / 120) * 0.95;
+            const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size);
+            gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+            gradient.addColorStop(0.5, `rgba(220, 220, 255, ${opacity * 0.7})`);
+            gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+            ctx.fillStyle = gradient;
             ctx.beginPath();
             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
             ctx.fill();
@@ -65,11 +69,11 @@ const GlobalSmoke = () => {
         });
 
       if (mousePosRef.current.x !== 0 && mousePosRef.current.y !== 0) {
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 5; i++) {
           particlesRef.current.push(
             new Particle(
-              mousePosRef.current.x + (Math.random() * 10 - 5),
-              mousePosRef.current.y + (Math.random() * 10 - 5)
+              mousePosRef.current.x + (Math.random() * 20 - 10),
+              mousePosRef.current.y + (Math.random() * 20 - 10)
             )
           );
         }
