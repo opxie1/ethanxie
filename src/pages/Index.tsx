@@ -1,12 +1,11 @@
 import React from "react";
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import { DragAndDraw } from "@/components/ui/drag-and-draw";
-import { SmokeCard } from "@/components/ui/smoke-card";
+import { GlobalSmoke } from "@/components/ui/smoke-card";
 import { SplineScene } from "@/components/ui/splite";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
-  FlaskConical, TrendingUp, Code, DollarSign,
+  FlaskConical, TrendingUp, Code, DollarSign, Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -132,6 +131,9 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+      {/* Global smoke overlay */}
+      <GlobalSmoke />
+
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
         <ErrorBoundary fallback={<div className="h-screen bg-background" />}>
@@ -147,9 +149,9 @@ const Index = () => {
         </ErrorBoundary>
       </section>
 
-      {/* Spline 3D Scene */}
-      <section className="h-screen w-full overflow-hidden">
-        <ErrorBoundary fallback={<div className="h-screen bg-background" />}>
+      {/* Spline 3D Scene — larger */}
+      <section className="h-[150vh] w-full overflow-hidden">
+        <ErrorBoundary fallback={<div className="h-[150vh] bg-background" />}>
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
             className="w-full h-full"
@@ -291,60 +293,34 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Interactive Canvas — Drag & Draw */}
-      <section className="py-24 px-6 bg-secondary/20">
-        <div className="max-w-5xl mx-auto">
+      {/* Resume Download */}
+      <section className="py-20 px-6 bg-secondary/20">
+        <div className="max-w-xl mx-auto text-center">
           <motion.div
-            className="mb-8 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="space-y-6"
           >
-            <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">Draw Something</h2>
-            <p className="text-muted-foreground text-sm">Click and drag on the canvas below.</p>
-          </motion.div>
-          <motion.div
-            className="glass-card overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <ErrorBoundary>
-              <DragAndDraw width={900} height={400} />
-            </ErrorBoundary>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Smoke Effect Card */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            className="mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-bold tracking-tight mb-2 text-foreground">Smoke Effect</h2>
-            <p className="text-muted-foreground text-sm">Hover over the card to generate particles.</p>
-          </motion.div>
-          <motion.div
-            className="glass-card h-64 overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <SmokeCard />
+            <Download className="size-8 mx-auto text-primary" />
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">Resume</h2>
+            <p className="text-muted-foreground">
+              Download my latest resume for the full picture.
+            </p>
+            <a
+              href="/Ethan_Xie_Resume.pdf"
+              download
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-foreground text-background font-medium hover:opacity-90 transition-opacity"
+            >
+              <Download className="size-4" /> Download PDF
+            </a>
           </motion.div>
         </div>
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-32 px-6 bg-secondary/20">
+      <section id="contact" className="py-32 px-6">
         <div className="max-w-xl mx-auto text-center">
           <motion.div
             initial="hidden"

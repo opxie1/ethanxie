@@ -29,7 +29,7 @@ class Particle {
   }
 }
 
-const SmokeCard = () => {
+const GlobalSmoke = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mousePosRef = useRef({ x: 0, y: 0 });
@@ -41,6 +41,11 @@ const SmokeCard = () => {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const updateCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.documentElement.scrollHeight;
+    };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -73,49 +78,46 @@ const SmokeCard = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    const updateCanvasSize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePosRef.current = {
+        x: e.clientX,
+        y: e.clientY + window.scrollY,
+      };
+    };
+
+    const handleMouseLeave = () => {
+      mousePosRef.current = { x: 0, y: 0 };
     };
 
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    // Resize canvas when page height changes (e.g. content loads)
+    const resizeObserver = new ResizeObserver(() => updateCanvasSize());
+    resizeObserver.observe(document.body);
+
     animate();
 
     return () => {
       window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      resizeObserver.disconnect();
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mousePosRef.current = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    };
-  };
-
-  const handleMouseLeave = () => {
-    mousePosRef.current = { x: 0, y: 0 };
-  };
-
   return (
-    <div
-      className="relative w-full h-full cursor-none"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 w-full h-full pointer-events-none"
+      style={{ zIndex: 9999 }}
+    />
   );
 };
 
-export { SmokeCard };
+export { GlobalSmoke };
