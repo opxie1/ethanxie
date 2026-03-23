@@ -14,10 +14,10 @@ class Particle {
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 5 + 2;
-    this.speedX = Math.random() * 2 - 1;
-    this.speedY = -Math.random() * 3 - 1;
-    this.life = 100;
+    this.size = Math.random() * 15 + 8;
+    this.speedX = Math.random() * 3 - 1.5;
+    this.speedY = -Math.random() * 4 - 2;
+    this.life = 120;
     this.initialSize = this.size;
   }
 
