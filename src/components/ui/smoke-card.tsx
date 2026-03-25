@@ -69,11 +69,11 @@ const GlobalSmoke = () => {
         });
 
       if (mousePosRef.current.x !== 0 && mousePosRef.current.y !== 0) {
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
           particlesRef.current.push(
             new Particle(
-              mousePosRef.current.x + (Math.random() * 20 - 10),
-              mousePosRef.current.y + (Math.random() * 20 - 10)
+              mousePosRef.current.x + (Math.random() * 6 - 3),
+              mousePosRef.current.y + (Math.random() * 6 - 3)
             )
           );
         }
