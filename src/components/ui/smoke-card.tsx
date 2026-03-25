@@ -55,10 +55,10 @@ const GlobalSmoke = () => {
         .map(particle => {
           particle.update();
           if (particle.size > 0) {
-            const opacity = (particle.life / 120) * 0.95;
+            const opacity = (particle.life / 80) * 1.0;
             const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size);
             gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-            gradient.addColorStop(0.5, `rgba(220, 220, 255, ${opacity * 0.7})`);
+            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${opacity * 0.8})`);
             gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
             ctx.fillStyle = gradient;
             ctx.beginPath();
