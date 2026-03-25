@@ -14,10 +14,10 @@ class Particle {
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 15 + 8;
-    this.speedX = Math.random() * 3 - 1.5;
-    this.speedY = -Math.random() * 4 - 2;
-    this.life = 120;
+    this.size = Math.random() * 4 + 2;
+    this.speedX = Math.random() * 1.2 - 0.6;
+    this.speedY = -Math.random() * 2.5 - 1;
+    this.life = 80;
     this.initialSize = this.size;
   }
 
@@ -25,7 +25,7 @@ class Particle {
     this.x += this.speedX;
     this.y += this.speedY;
     this.life -= 1;
-    this.size = Math.max(0, this.initialSize * (this.life / 100));
+    this.size = Math.max(0, this.initialSize * (this.life / 80));
   }
 }
 
@@ -55,10 +55,10 @@ const GlobalSmoke = () => {
         .map(particle => {
           particle.update();
           if (particle.size > 0) {
-            const opacity = (particle.life / 120) * 0.95;
+            const opacity = (particle.life / 80) * 1.0;
             const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size);
             gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-            gradient.addColorStop(0.5, `rgba(220, 220, 255, ${opacity * 0.7})`);
+            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${opacity * 0.8})`);
             gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
             ctx.fillStyle = gradient;
             ctx.beginPath();
@@ -69,11 +69,11 @@ const GlobalSmoke = () => {
         });
 
       if (mousePosRef.current.x !== 0 && mousePosRef.current.y !== 0) {
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
           particlesRef.current.push(
             new Particle(
-              mousePosRef.current.x + (Math.random() * 20 - 10),
-              mousePosRef.current.y + (Math.random() * 20 - 10)
+              mousePosRef.current.x + (Math.random() * 6 - 3),
+              mousePosRef.current.y + (Math.random() * 6 - 3)
             )
           );
         }
