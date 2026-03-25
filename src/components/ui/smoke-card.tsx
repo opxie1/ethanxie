@@ -14,10 +14,10 @@ class Particle {
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
-    this.size = Math.random() * 4 + 2;
-    this.speedX = Math.random() * 1.2 - 0.6;
-    this.speedY = -Math.random() * 2.5 - 1;
-    this.life = 80;
+    this.size = Math.random() * 6 + 4;
+    this.speedX = Math.random() * 0.35 - 0.175;
+    this.speedY = -Math.random() * 1.8 - 1.2;
+    this.life = 140;
     this.initialSize = this.size;
   }
 
@@ -25,7 +25,7 @@ class Particle {
     this.x += this.speedX;
     this.y += this.speedY;
     this.life -= 1;
-    this.size = Math.max(0, this.initialSize * (this.life / 80));
+    this.size = Math.max(0, this.initialSize * (0.65 + this.life / 200));
   }
 }
 
@@ -43,37 +43,44 @@ const GlobalSmoke = () => {
     if (!ctx) return;
 
     const updateCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     };
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      ctx.globalCompositeOperation = 'lighter';
 
       particlesRef.current = particlesRef.current
         .filter(particle => particle.life > 0 && particle.size > 0)
         .map(particle => {
           particle.update();
           if (particle.size > 0) {
-            const opacity = (particle.life / 80) * 1.0;
-            const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size);
+            const opacity = Math.min(1, (particle.life / 140) * 1.35);
+            const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 2.4);
             gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${opacity * 0.8})`);
-            gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+            gradient.addColorStop(0.22, `rgba(255, 255, 255, ${opacity * 0.95})`);
+            gradient.addColorStop(0.55, `rgba(255, 255, 255, ${opacity * 0.45})`);
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
             ctx.fillStyle = gradient;
             ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.ellipse(particle.x, particle.y, particle.size * 0.75, particle.size * 2.2, 0, 0, Math.PI * 2);
             ctx.fill();
           }
           return particle;
         });
 
-      if (mousePosRef.current.x !== 0 && mousePosRef.current.y !== 0) {
-        for (let i = 0; i < 3; i++) {
+      if (mousePosRef.current.x !== 0 || mousePosRef.current.y !== 0) {
+        for (let i = 0; i < 4; i++) {
           particlesRef.current.push(
             new Particle(
-              mousePosRef.current.x + (Math.random() * 6 - 3),
-              mousePosRef.current.y + (Math.random() * 6 - 3)
+              mousePosRef.current.x + (Math.random() * 2 - 1),
+              mousePosRef.current.y + (Math.random() * 4 - 2)
             )
           );
         }
@@ -85,7 +92,7 @@ const GlobalSmoke = () => {
     const handleMouseMove = (e: MouseEvent) => {
       mousePosRef.current = {
         x: e.clientX,
-        y: e.clientY + window.scrollY,
+        y: e.clientY,
       };
     };
 
@@ -98,17 +105,12 @@ const GlobalSmoke = () => {
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Resize canvas when page height changes (e.g. content loads)
-    const resizeObserver = new ResizeObserver(() => updateCanvasSize());
-    resizeObserver.observe(document.body);
-
     animate();
 
     return () => {
       window.removeEventListener('resize', updateCanvasSize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      resizeObserver.disconnect();
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -118,7 +120,7 @@ const GlobalSmoke = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none"
+      className="fixed inset-0 pointer-events-none"
       style={{ zIndex: 9999 }}
     />
   );
