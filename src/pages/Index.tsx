@@ -131,8 +131,6 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
-      {/* Global smoke overlay */}
-      <GlobalSmoke />
 
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
