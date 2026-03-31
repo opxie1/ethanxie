@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; // v2
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
