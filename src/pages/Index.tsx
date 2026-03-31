@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { GlobalSmoke } from "@/components/ui/smoke-card";
-import { SplineScene } from "@/components/ui/splite";
+import Navbar from "@/components/Navbar";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
-  FlaskConical, TrendingUp, Code, DollarSign, Download,
+  FlaskConical, TrendingUp, Code, DollarSign, Download, BarChart3, ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -133,6 +134,7 @@ const Index = () => {
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
       {/* Global smoke overlay */}
       <GlobalSmoke />
+      <Navbar />
 
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
@@ -149,14 +151,33 @@ const Index = () => {
         </ErrorBoundary>
       </section>
 
-      {/* Spline 3D Scene — larger */}
-      <section className="h-[150vh] w-full overflow-hidden">
-        <ErrorBoundary fallback={<div className="h-[150vh] bg-background" />}>
-          <SplineScene
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full"
-          />
-        </ErrorBoundary>
+      {/* Pitch Decks CTA */}
+      <section className="py-24 px-6">
+        <motion.div
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <Link to="/pitch-decks" className="block group">
+            <div className="glass-card p-10 sm:p-14 text-center hover:border-primary/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10">
+                <BarChart3 className="size-10 mx-auto mb-6 text-primary" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-foreground">
+                  Pitch Decks
+                </h2>
+                <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
+                  Explore my investment theses — interactive stock pitches built with conviction.
+                </p>
+                <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium group-hover:gap-3 transition-all duration-300">
+                  View Pitch Decks <ArrowRight className="size-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
       </section>
 
       {/* Experience — Radial Orbital Timeline */}
