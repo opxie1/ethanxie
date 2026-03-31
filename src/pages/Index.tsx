@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import { GlobalSmoke } from "@/components/ui/smoke-card";
+
 import { SplineScene } from "@/components/ui/splite";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
