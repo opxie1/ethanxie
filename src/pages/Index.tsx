@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "@/components/ui/animated-shader-hero";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
-import { GlobalSmoke } from "@/components/ui/smoke-card";
+
 import { SplineScene } from "@/components/ui/splite";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
@@ -131,8 +131,6 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
-      {/* Global smoke overlay */}
-      <GlobalSmoke />
 
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden">
