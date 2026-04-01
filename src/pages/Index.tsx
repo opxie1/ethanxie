@@ -5,7 +5,7 @@ import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import Navbar from "@/components/Navbar";
 import {
   Briefcase, GraduationCap, Award, Mail, Globe,
-  FlaskConical, TrendingUp, Code, DollarSign, Download, BarChart3, ArrowRight,
+  FlaskConical, TrendingUp, Code, DollarSign, Download, BarChart3, ArrowRight, Network,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -151,26 +151,48 @@ const Index = () => {
       {/* Pitch Decks CTA */}
       <section className="py-24 px-6">
         <motion.div
-          className="max-w-3xl mx-auto"
+          className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <Link to="/pitch-decks" className="block group">
-            <div className="glass-card p-10 sm:p-14 text-center hover:border-primary/30 transition-all duration-500 relative overflow-hidden">
+          <Link to="/pitch-decks" className="block group h-full">
+            <div className="glass-card p-10 sm:p-14 text-center hover:border-primary/30 transition-all duration-500 relative overflow-hidden h-full flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
+              <div className="relative z-10 flex flex-col h-full">
                 <BarChart3 className="size-10 mx-auto mb-6 text-primary" />
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-foreground">
                   Pitch Decks
                 </h2>
-                <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
+                <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto flex-grow">
                   Explore my investment theses — interactive stock pitches built with conviction.
                 </p>
-                <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium group-hover:gap-3 transition-all duration-300">
-                  View Pitch Decks <ArrowRight className="size-4" />
-                </span>
+                <div>
+                  <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium group-hover:gap-3 transition-all duration-300">
+                    View Pitch Decks <ArrowRight className="size-4" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link to="/ml-projects" className="block group h-full">
+            <div className="glass-card p-10 sm:p-14 text-center hover:border-primary/30 transition-all duration-500 relative overflow-hidden h-full flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative z-10 flex flex-col h-full">
+                <Network className="size-10 mx-auto mb-6 text-primary" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-foreground">
+                  ML Projects
+                </h2>
+                <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto flex-grow">
+                  Explore highly-advanced algorithmic systems at the intersection of AI and Finance.
+                </p>
+                <div>
+                  <span className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-foreground text-background font-medium group-hover:gap-3 transition-all duration-300">
+                    View ML Projects <ArrowRight className="size-4" />
+                  </span>
+                </div>
               </div>
             </div>
           </Link>

@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Home, BarChart3 } from "lucide-react";
+import { Home, BarChart3, Network } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/pitch-decks", label: "Pitch Decks", icon: BarChart3 },
+  { to: "/ml-projects", label: "ML Projects", icon: Network },
 ];
 
 const Navbar = () => {
