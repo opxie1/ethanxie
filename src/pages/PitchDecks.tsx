@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SplineScene } from "@/components/ui/splite";
-import { GlobalSmoke } from "@/components/ui/smoke-card";
 import Navbar from "@/components/Navbar";
 import {
   TrendingUp, TrendingDown, X, ChevronRight,
@@ -169,7 +168,6 @@ const PitchDecks = () => {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 overflow-hidden">
-      <GlobalSmoke />
       <Navbar />
 
       {/* ── Hero header ── */}
