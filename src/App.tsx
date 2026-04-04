@@ -7,12 +7,14 @@ import Index from "./pages/Index.tsx";
 import PitchDecks from "./pages/PitchDecks.tsx";
 import MLProjects from "./pages/MLProjects.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import CustomCursor from "./components/CustomCursor.tsx";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <CustomCursor />
       <Toaster />
       <Sonner />
       <BrowserRouter>

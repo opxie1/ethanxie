@@ -4,6 +4,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom cursor */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background: hsl(217.2 91.2% 59.8%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  transition: width 0.15s ease, height 0.15s ease, top 0.15s ease, left 0.15s ease, opacity 0.15s ease;
+}
+
+.cursor-dot--click {
+  width: 5px;
+  height: 5px;
+  top: -2.5px;
+  left: -2.5px;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: -18px;
+  left: -18px;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid hsl(217.2 91.2% 59.8% / 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  will-change: transform;
+  transition: width 0.2s ease, height 0.2s ease, top 0.2s ease, left 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.cursor-ring--hover {
+  width: 48px;
+  height: 48px;
+  top: -24px;
+  left: -24px;
+  border-color: hsl(217.2 91.2% 59.8% / 0.8);
+  background: hsl(217.2 91.2% 59.8% / 0.06);
+}
+
+.cursor-ring--click {
+  width: 28px;
+  height: 28px;
+  top: -14px;
+  left: -14px;
+  background: hsl(217.2 91.2% 59.8% / 0.12);
+}
+
 @layer base {
   :root {
     --background: 240 10% 3.9%;
