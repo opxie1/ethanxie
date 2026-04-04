@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/c/Users/xief/.bun/bin/bun run:*)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

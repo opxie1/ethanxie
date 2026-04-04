@@ -8,6 +8,7 @@ import PitchDecks from "./pages/PitchDecks.tsx";
 import MLProjects from "./pages/MLProjects.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import CustomCursor from "./components/CustomCursor.tsx";
+import GlitchClock from "./components/GlitchClock.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <GlitchClock />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/pitch-decks" element={<PitchDecks />} />
