@@ -61,6 +61,121 @@
   background: hsl(217.2 91.2% 59.8% / 0.12);
 }
 
+/* Glitch clock */
+.glitch-clock {
+  position: absolute;
+  top: 4.5rem;
+  left: 2rem;
+  z-index: 1001;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: hsl(0 0% 98% / 0.6);
+  user-select: none;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: color 0.3s, border-color 0.3s;
+  animation: clock-shimmer 4s ease-in-out infinite;
+}
+
+.glitch-clock:hover {
+  color: hsl(217.2 91.2% 59.8%);
+  border-color: hsl(217.2 91.2% 59.8% / 0.2);
+}
+
+/* Ambient shimmer */
+@keyframes clock-shimmer {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Glitch layers — only active on hover via data-text */
+.glitch-clock::before,
+.glitch-clock::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0.3rem;
+  left: 0.7rem;
+  right: 0.7rem;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-clock::before {
+  color: hsl(0 100% 65% / 0.7);
+  z-index: -1;
+}
+
+.glitch-clock::after {
+  color: hsl(190 100% 60% / 0.7);
+  z-index: -1;
+}
+
+/* Active glitch */
+.glitch-clock--active {
+  animation: none;
+  opacity: 1;
+}
+
+.glitch-clock--active::before {
+  opacity: 1;
+  animation: glitch-top 0.3s steps(2, jump-none) infinite;
+}
+
+.glitch-clock--active::after {
+  opacity: 1;
+  animation: glitch-bottom 0.3s steps(2, jump-none) infinite reverse;
+}
+
+@keyframes glitch-top {
+  0% {
+    clip-path: inset(0 0 60% 0);
+    transform: translate(-2px, -1px);
+  }
+  25% {
+    clip-path: inset(20% 0 40% 0);
+    transform: translate(2px, 1px);
+  }
+  50% {
+    clip-path: inset(50% 0 10% 0);
+    transform: translate(-1px, 0);
+  }
+  75% {
+    clip-path: inset(10% 0 50% 0);
+    transform: translate(1px, -1px);
+  }
+  100% {
+    clip-path: inset(40% 0 20% 0);
+    transform: translate(-2px, 1px);
+  }
+}
+
+@keyframes glitch-bottom {
+  0% {
+    clip-path: inset(60% 0 0 0);
+    transform: translate(2px, 1px);
+  }
+  25% {
+    clip-path: inset(40% 0 20% 0);
+    transform: translate(-2px, -1px);
+  }
+  50% {
+    clip-path: inset(10% 0 50% 0);
+    transform: translate(1px, 0);
+  }
+  75% {
+    clip-path: inset(50% 0 10% 0);
+    transform: translate(-1px, 1px);
+  }
+  100% {
+    clip-path: inset(20% 0 40% 0);
+    transform: translate(2px, -1px);
+  }
+}
+
 @layer base {
   :root {
     --background: 240 10% 3.9%;
