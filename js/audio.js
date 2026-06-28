@@ -42,6 +42,8 @@ function ensure() {
 
 export function setEnabled(on) { enabled = on; if (on) ensure(); }
 export function isEnabled() { return enabled; }
+// resume a suspended context inside a user gesture (browsers block audio until then)
+export function resume() { ensure(); }
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const jit = () => Math.pow(2, rand(-0.045, 0.045)); // ±~55 cents

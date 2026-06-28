@@ -7,7 +7,7 @@ import {
   IDENTITY, ABOUT, BUILDS, RESEARCH, AWARDS, TERMINAL, SKILLS, EDUCATION, CONTACT,
 } from "./content.js";
 import { initParallax, initDrag, tidyDesk, initDust, initLamp, boot } from "./engine.js";
-import { sfx, setEnabled, isEnabled } from "./audio.js";
+import { sfx, setEnabled, isEnabled, resume as resumeAudio } from "./audio.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -266,6 +266,13 @@ function buildMobile() {
 }
 
 // --------------------------------------------------------------- go
+// Sound is ON by default. Browsers keep the audio context suspended until a
+// user gesture, so warm it up on the very first pointer-down (capture phase,
+// so it runs before the object's own pick sound).
+setEnabled(true);
+window.addEventListener("pointerdown", () => { if (isEnabled()) resumeAudio(); },
+  { once: true, capture: true });
+
 initParallax();
 initDrag({
   onOpen: openSheet,
