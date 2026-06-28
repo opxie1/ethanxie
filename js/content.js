@@ -135,12 +135,13 @@ export const RESEARCH = [
 
 // Medals / ribbons / seals — awards & certifications (resume).
 export const AWARDS = [
-  { kind: "silver", title: "National Personal Finance Challenge", place: "2nd Place", detail: "#2 of 7,000+ teams, national · Council for Economic Education", year: "2026" },
-  { kind: "silver", title: "Delaware Launch Competition", place: "2nd Place", detail: "pitched Respondify · Delaware Entrepreneurship League", year: "2026" },
-  { kind: "gold",   title: "Delaware Personal Finance Challenge", place: "1st Place", detail: "#1 of 12 teams, state · Council for Economic Education", year: "2026" },
-  { kind: "seal",   title: "National Science Foundation Grant", place: "$1,500 Grant", detail: "HeadHaven · Princeton University & NSF", year: "2026" },
+  { kind: "silver", title: "National Personal Finance Challenge", place: "2nd Place", detail: "#2 of 7,000+ teams, national · $5,000 · Council for Economic Education", year: "2026" },
+  { kind: "silver", title: "Delaware Launch Competition", place: "2nd Place", detail: "pitched Respondify · $500 · Delaware Entrepreneurship League", year: "2026" },
+  { kind: "gold",   title: "Delaware Personal Finance Challenge", place: "1st Place", detail: "#1 of 50+ teams, state · $2,500 · Council for Economic Education", year: "2026" },
+  { kind: "seal",   title: "National Science Foundation Grant", place: "$1,500 Grant", detail: "HeadHaven · Princeton University & National Science Foundation", year: "2026" },
   { kind: "cert",   title: "Bloomberg Market Concepts (BMC)", place: "Certified", detail: "Bloomberg Terminal proficiency", year: "2025" },
-  { kind: "silver", title: "BPA Financial Portfolio Management (V09)", place: "2nd Place", detail: "#2 of 250+ teams, international", year: "2025" },
+  { kind: "cert",   title: "Bloomberg Finance Fundamentals", place: "Certified", detail: "Bloomberg for Education certificate", year: "" },
+  { kind: "silver", title: "Financial Portfolio Management (V09)", place: "2nd Place", detail: "#2 of 250+ teams, international · Business Professionals of America", year: "2025" },
 ];
 
 // The CRT ticker tape + "NOW" readout.
@@ -151,12 +152,12 @@ export const TERMINAL = {
     "tracking the Liberation Day tariff shock at DSU",
   ],
   ticker: [
-    "1ST — DE PERSONAL FINANCE CHALLENGE",
-    "2ND / 7000+ — NATIONAL PERSONAL FINANCE CHALLENGE",
-    "2ND — DELAWARE LAUNCH COMPETITION",
-    "$1,500 — NSF GRANT · HEADHAVEN",
-    "2ND / 250+ — BPA FINANCIAL PORTFOLIO MGMT",
-    "BMC — BLOOMBERG CERTIFIED",
+    "1ST / 50+ — DE PERSONAL FINANCE CHALLENGE · $2,500",
+    "2ND / 7000+ — NATIONAL PERSONAL FINANCE CHALLENGE · $5,000",
+    "2ND — DELAWARE LAUNCH COMPETITION · $500",
+    "$1,500 — NATIONAL SCIENCE FOUNDATION GRANT · HEADHAVEN",
+    "2ND / 250+ — BUSINESS PROFESSIONALS OF AMERICA · PORTFOLIO MGMT",
+    "BLOOMBERG — BMC + FINANCE FUNDAMENTALS CERTIFIED",
   ],
 };
 

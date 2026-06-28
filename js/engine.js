@@ -145,9 +145,11 @@ export function initDust(count = 34) {
 
 // ---------------------------------------------------------------- lamp
 export function initLamp(onToggle) {
-  const chain = document.getElementById("pullChain");
-  if (!chain) return;
-  chain.addEventListener("click", () => {
+  const lamp = document.getElementById("lamp");
+  if (!lamp) return;
+  // Touch anywhere on the lamp toggles it. The pull-chain is a <button> inside,
+  // so its click (and keyboard Enter) bubbles up here too — one handler covers all.
+  lamp.addEventListener("click", () => {
     const body = document.body;
     const night = body.classList.toggle("mode-night");
     body.classList.toggle("mode-day", !night);
