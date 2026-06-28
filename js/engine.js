@@ -9,6 +9,10 @@
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
+// shared flag: while an object is being dragged, freeze the desk parallax so the
+// 3D-tilting preserve-3d tree isn't re-composited on every pointer move.
+let anyDragging = false;
+
 // ---------------------------------------------------------------- parallax
 export function initParallax() {
   const desk = document.getElementById("desk");
@@ -16,6 +20,7 @@ export function initParallax() {
   let tx = 0, ty = 0, cur = 0, cury = 0, raf = null;
 
   function loop() {
+    if (anyDragging) { raf = null; return; }   // hold still while dragging
     cur += (tx - cur) * 0.08;
     cury += (ty - cury) * 0.08;
     desk.style.setProperty("--tiltY", cur.toFixed(3) + "deg");
@@ -25,7 +30,7 @@ export function initParallax() {
     } else { raf = null; }
   }
   window.addEventListener("pointermove", (e) => {
-    if (e.pointerType === "touch") return;
+    if (e.pointerType === "touch" || anyDragging) return;
     const nx = e.clientX / window.innerWidth - 0.5;
     const ny = e.clientY / window.innerHeight - 0.5;
     tx = nx * 5.5;          // gentle — depth, not seasickness
@@ -52,12 +57,13 @@ export function initDrag({ onOpen, hooks = {} } = {}) {
     el.addEventListener("pointerdown", (e) => {
       if (e.button !== undefined && e.button !== 0) return;
       pid = e.pointerId;
-      dragging = true; moved = 0; vx = 0;
+      dragging = true; anyDragging = true; moved = 0; vx = 0;
       lastX = e.clientX; lastY = e.clientY;
       el.classList.add("grabbing");
+      el.style.setProperty("--lift", "1");   // set once on pick-up, not per frame
       el.style.zIndex = ++zTop;
       el.setPointerCapture(pid);
-      hooks.pick && hooks.pick();
+      hooks.pick && hooks.pick(el);
       e.preventDefault();
     });
 
@@ -71,13 +77,12 @@ export function initDrag({ onOpen, hooks = {} } = {}) {
       vx = vx * 0.7 + mvx * 0.3;
       el.style.setProperty("--dx", dx + "px");
       el.style.setProperty("--dy", dy + "px");
-      el.style.setProperty("--lift", "1");
       el.style.setProperty("--rot", clamp(vx * 0.55, -9, 9).toFixed(2) + "deg");
     });
 
     function release(e) {
       if (!dragging || e.pointerId !== pid) return;
-      dragging = false;
+      dragging = false; anyDragging = false;
       el.classList.remove("grabbing");
       el.style.removeProperty("--lift");   // let CSS ease lift back down
       el.style.setProperty("--rot", "0deg"); // banks back upright (eased by CSS)
@@ -86,7 +91,7 @@ export function initDrag({ onOpen, hooks = {} } = {}) {
         // it was a tap, not a sling → open it
         onOpen && onOpen(el);
       } else {
-        hooks.drop && hooks.drop();
+        hooks.drop && hooks.drop(el);
         el.dataset.moved = "1";  // remember it was repositioned (for tidy)
       }
     }

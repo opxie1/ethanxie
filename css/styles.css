@@ -160,20 +160,20 @@ body {
   border: 0; background: none; color: inherit; font: inherit;
   padding: 0; cursor: grab;
   z-index: 10;
-  /* the shadow grows + softens as the object is lifted toward you;
-     it falls down-and-right, away from the lamp at top-left */
-  filter:
-    drop-shadow(calc(3px + var(--lift) * 9px)
-                calc(7px + var(--lift) * 26px)
-                calc(9px + var(--lift) * 34px)
-                rgba(0,0,0, calc(.42 + var(--lift) * .12)));
-  transition: --lift .28s var(--ease-soft), --rot .5s var(--ease-soft),
-              filter .28s var(--ease-soft);
+  /* A FIXED shadow — it does not depend on --lift, so it never re-rasterizes
+     while dragging (that was the lag). Lift is conveyed purely by transform
+     (scale + translateY), which the GPU composites for free. */
+  filter: drop-shadow(4px 9px 13px rgba(0,0,0,.42));
+  transition: --lift .26s var(--ease-soft), --rot .5s var(--ease-soft), filter .2s ease;
   will-change: transform;
 }
 .obj:hover { --lift: .30; }
 .obj:focus-visible { outline: none; --lift: .42; }
-.obj.grabbing { cursor: grabbing; transition: --rot .12s linear; }
+/* While grabbing: one bigger shadow (changes once on pick-up, not per frame),
+   and NO transition on dx/dy/rot so the object tracks the pointer exactly. */
+.obj.grabbing { cursor: grabbing;
+  transition: --lift .15s ease, filter .15s ease;
+  filter: drop-shadow(12px 22px 26px rgba(0,0,0,.5)); }
 .is-loading .obj { --drop: -130vh; }
 body:not(.is-loading) .obj { animation: drop 1s var(--ease-thud) both; }
 
@@ -546,8 +546,8 @@ body:not(.is-loading) .obj { animation: drop 1s var(--ease-thud) both; }
 /* ============================================================ OVERLAY ===== */
 .overlay{ position:fixed; inset:0; z-index:100; }
 .overlay[hidden]{ display:none; }
-.overlay-backdrop{ position:absolute; inset:0; background:rgba(10,6,2,.62);
-  backdrop-filter: blur(3px) brightness(.7); opacity:0; transition:opacity .4s ease; }
+.overlay-backdrop{ position:absolute; inset:0; background:rgba(8,5,2,.74);
+  opacity:0; transition:opacity .4s ease; }
 .overlay.show .overlay-backdrop{ opacity:1; }
 
 .sheet{
