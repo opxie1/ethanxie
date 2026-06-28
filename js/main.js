@@ -12,6 +12,7 @@ import { sfx, setEnabled, isEnabled } from "./audio.js";
 const $ = (s, r = document) => r.querySelector(s);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const paras = (s) => s.split("\n\n").map((p) => `<p>${esc(p)}</p>`).join("");
+const matOf = (el) => (el && el.dataset && el.dataset.material) || "default";
 
 // --------------------------------------------------------------- sheet content
 function renderAbout() {
@@ -23,13 +24,7 @@ function renderAbout() {
     <div class="s-chiprow">
       ${ABOUT.stats.map((s) => `<span class="s-chip"><b>${esc(s.k)}</b> &nbsp;${esc(s.v)}</span>`).join("")}
     </div>
-    <div class="s-rule"></div>
-    <span class="s-kicker">${esc(ABOUT.storyTitle)}</span>
-    <div class="s-body" style="margin-top:8px">${paras(ABOUT.story)}</div>
     <div class="s-sign">${esc(ABOUT.signature)}</div>
-    <div class="s-rule"></div>
-    <span class="s-kicker">also on the desk</span>
-    <div class="s-body">${ABOUT.affiliations.map((a) => `<p>· ${esc(a)}</p>`).join("")}</div>
   `;
 }
 
@@ -55,7 +50,7 @@ function renderResearch() {
   return `
     <span class="s-kicker">the rolodex</span>
     <h2 class="s-title">Research</h2>
-    <div class="s-meta">five labs · cold-emailed my way into every one</div>
+    <div class="s-meta">four universities · economics, law &amp; finance</div>
     ${RESEARCH.map((r) => `
       <div class="rc">
         <span class="rc-when">${esc(r.when)}</span>
@@ -119,7 +114,10 @@ function renderEducation() {
         <span class="rc-when">${esc(e.when)}</span>
         <div class="rc-inst">${esc(e.inst)}</div>
         <div class="rc-role">${esc(e.detail)} · ${esc(e.where)}</div>
-        <div class="rc-body">${esc(e.extra)}</div>
+        ${e.extra ? `<div class="rc-body">${esc(e.extra)}</div>` : ""}
+        ${e.activities && e.activities.length ? `
+          <div class="edu-sub">Clubs &amp; Activities</div>
+          <ul class="edu-list">${e.activities.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}
       </div>`).join("")}
   `;
 }
@@ -138,26 +136,26 @@ function render(key) {
 // --------------------------------------------------------------- overlay
 const overlay = $("#overlay");
 const sheetBody = $("#sheetBody");
-let openCount = 0;
+let lastMaterial = "default";
 
 function openSheet(el) {
   const key = el.dataset.open;
   if (!key) return;
+  lastMaterial = matOf(el);
   sheetBody.innerHTML = render(key);
   overlay.hidden = false;
   // force reflow so the transition runs
   void overlay.offsetWidth;
   overlay.classList.add("show");
-  sfx.open();
+  sfx.open(lastMaterial);
   hideHint();
-  openCount++;
   wireSheet();
 }
 
 function closeSheet() {
   if (overlay.hidden) return;
   overlay.classList.remove("show");
-  sfx.close();
+  sfx.close(lastMaterial);
   setTimeout(() => { overlay.hidden = true; sheetBody.innerHTML = ""; }, 420);
 }
 
@@ -225,10 +223,10 @@ function initChrome() {
     setEnabled(on);
     mute.setAttribute("aria-pressed", String(on));   // pressed = sound on
     mute.textContent = on ? "♪ sound: on" : "♪ sound: off";
-    if (on) sfx.lamp();
+    if (on) sfx.lamp(true);
   });
 
-  $("#tidy").addEventListener("click", () => { tidyDesk(sfx.drop); hideHint(); });
+  $("#tidy").addEventListener("click", () => { tidyDesk(sfx.tidy); hideHint(); });
 }
 
 // --------------------------------------------------------------- mobile
@@ -244,17 +242,18 @@ function buildMobile() {
     <div class="mf-name">${esc(IDENTITY.name)}</div>
     <div class="mf-sub">${esc(IDENTITY.estLine)}</div>
     <p class="mf-lede">${esc(ABOUT.lede)}</p>
-    ${block(ABOUT.storyTitle, `<div class="mf-story">${paras(ABOUT.story)}</div>`)}
     ${block("Built", BUILDS.map((b) =>
       item(b.name, b.when,
         `${esc(b.headline)} ${esc(b.body)} ${b.link && b.link.href
           ? `<br><a href="${b.link.href}" target="_blank" rel="noopener">${esc(b.link.label)}</a>` : ""}`)).join(""))}
     ${block("Research", RESEARCH.map((r) =>
-      item(r.inst, r.when, `<em>${esc(r.role)}</em> — ${esc(r.body)}`)).join(""))}
+      item(r.inst, r.when, `<em>${esc(r.role)}${r.pi ? " — " + esc(r.pi) : ""}</em> — ${esc(r.body)}`)).join(""))}
     ${block("Awards & Certifications", AWARDS.map((a) =>
       item(`${a.place} — ${a.title}`, a.year, esc(a.detail))).join(""))}
     ${block("Education", EDUCATION.map((e) =>
-      item(e.inst, e.when, `${esc(e.detail)} · ${esc(e.where)}<br>${esc(e.extra)}`)).join(""))}
+      item(e.inst, e.when, `${esc(e.detail)} · ${esc(e.where)}`
+        + (e.extra ? `<br>${esc(e.extra)}` : "")
+        + (e.activities && e.activities.length ? `<br>${e.activities.map(esc).join(" · ")}` : ""))).join(""))}
     ${block("Toolbox", Object.entries(SKILLS).map(([k, v]) =>
       item(k, "", esc(v.join(" · ")))).join(""))}
     ${block("Contact",
@@ -268,9 +267,12 @@ function buildMobile() {
 
 // --------------------------------------------------------------- go
 initParallax();
-initDrag({ onOpen: openSheet, hooks: { pick: sfx.pick, drop: sfx.drop } });
+initDrag({
+  onOpen: openSheet,
+  hooks: { pick: (el) => sfx.pick(matOf(el)), drop: (el) => sfx.drop(matOf(el)) },
+});
 initDust();
-initLamp((night) => { sfx.lamp(); hideHint(); });
+initLamp((night) => { sfx.lamp(night); hideHint(); });
 runTerminal();
 initChrome();
 buildMobile();
