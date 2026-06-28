@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Xie — desk</title>
+  <meta name="description" content="The desk of Ethan Xie: builder, economics researcher, and the high-schooler who cold-emailed 900 professors into saying yes." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23c9a24a'/%3E%3Crect x='2' y='2' width='28' height='28' rx='4' fill='none' stroke='%234a3812' stroke-opacity='.4'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%234a3812'%3EEX%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Special+Elite&family=Courier+Prime:ital@0;1&family=VT323&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="is-loading mode-day">
+
+  <!-- Small-screen fallback (desktop-only showcase, by request) -->
+  <aside class="mobile-fallback" aria-hidden="true"></aside>
+
+  <!-- The light from the lamp, painted across the whole desk -->
+  <div class="room-light" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="dust" aria-hidden="true"></div>
+
+  <main class="stage" id="stage">
+    <div class="desk" id="desk">
+
+      <!-- Framed diploma leaning on the desk: education -->
+      <button class="obj diploma" data-open="education" data-drag="true"
+              style="--home-x: 75%; --home-y: 16%;" aria-label="Education — framed diploma">
+        <span class="frame">
+          <span class="frame-paper">
+            <span class="seal-emboss"></span>
+            <span class="dip-head">EDUCATION</span>
+            <span class="dip-line">Charter School of Wilmington</span>
+            <span class="dip-sub">GPA 4.0 · University of Delaware coursework</span>
+            <span class="dip-foot">— open to read —</span>
+          </span>
+        </span>
+      </button>
+
+      <!-- Brass banker's lamp on the desk + pull chain (day / working-late) -->
+      <div class="lamp" id="lamp" aria-hidden="false">
+        <span class="lamp-glow"></span>
+        <span class="lamp-shade"><span class="shade-gloss"></span><span class="shade-trim"></span></span>
+        <span class="lamp-stem"></span>
+        <span class="lamp-base"></span>
+        <button class="pull-chain" id="pullChain" aria-label="Pull the lamp chain — switch between day and working-late">
+          <span class="chain"></span><span class="chain-ball"></span>
+        </button>
+      </div>
+
+      <!-- Green leather desk blotter that frames the working area -->
+      <div class="blotter" aria-hidden="true">
+        <span class="blotter-corner tl"></span><span class="blotter-corner tr"></span>
+        <span class="blotter-corner bl"></span><span class="blotter-corner br"></span>
+      </div>
+
+      <!-- Engraved brass nameplate -->
+      <div class="obj nameplate" data-static="true" style="--home-x: 50%; --home-y: 14%;">
+        <span class="plate">
+          <span class="plate-name">ETHAN XIE</span>
+          <span class="plate-sub">EST. 2009 · WILMINGTON, DE</span>
+        </span>
+        <span class="plate-screw s1"></span><span class="plate-screw s2"></span>
+        <span class="plate-screw s3"></span><span class="plate-screw s4"></span>
+      </div>
+
+      <!-- Leather portfolio (About + the story) -->
+      <button class="obj portfolio" data-open="about" data-drag="true"
+              style="--home-x: 20%; --home-y: 40%;" aria-label="About Ethan — open the leather portfolio">
+        <span class="folio-cover">
+          <span class="folio-stitch"></span>
+          <span class="folio-monogram">EX</span>
+          <span class="folio-tag">— about —</span>
+        </span>
+        <span class="folio-pages"></span>
+      </button>
+
+      <!-- CRT terminal: live award ticker + NOW readout -->
+      <button class="obj terminal" data-open="awards" data-drag="true"
+              style="--home-x: 80%; --home-y: 33%;" aria-label="Terminal — awards and what I'm working on now">
+        <span class="crt-bezel">
+          <span class="crt-screen">
+            <span class="crt-lines"></span>
+            <span class="crt-now" id="crtNow"></span>
+            <span class="crt-ticker"><span class="crt-ticker-track" id="crtTicker"></span></span>
+            <span class="crt-prompt">&gt;&nbsp;<span class="cursor">█</span></span>
+          </span>
+          <span class="crt-knob k1"></span><span class="crt-knob k2"></span>
+          <span class="crt-brand">XIE-OS</span>
+        </span>
+      </button>
+
+      <!-- Manila project folders (Moldr / Respondify / HeadHaven) -->
+      <button class="obj folder f1" data-open="build:moldr" data-drag="true"
+              style="--home-x: 39%; --home-y: 56%;" aria-label="Moldr project folder">
+        <span class="folder-tab">MOLDR</span>
+        <span class="folder-body"><span class="folder-paper">
+          <span class="folder-note">Gesture + voice CAD</span>
+          <span class="folder-stamp">DEMO</span>
+        </span></span>
+      </button>
+      <button class="obj folder f2" data-open="build:respondify" data-drag="true"
+              style="--home-x: 53%; --home-y: 53%;" aria-label="Respondify project folder">
+        <span class="folder-tab">RESPONDIFY</span>
+        <span class="folder-body"><span class="folder-paper">
+          <span class="folder-note">Encrypted SOS network</span>
+          <span class="folder-stamp">DEMO</span>
+        </span></span>
+      </button>
+      <button class="obj folder f3" data-open="build:headhaven" data-drag="true"
+              style="--home-x: 67%; --home-y: 56%;" aria-label="HeadHaven project folder">
+        <span class="folder-tab">HEADHAVEN</span>
+        <span class="folder-body"><span class="folder-paper">
+          <span class="folder-note">Wearable that catches falls</span>
+          <span class="folder-stamp nsf">NSF</span>
+        </span></span>
+      </button>
+
+      <!-- Rolodex of research positions -->
+      <button class="obj rolodex" data-open="research" data-drag="true"
+              style="--home-x: 22%; --home-y: 72%;" aria-label="Rolodex — research positions">
+        <span class="rolo-card back2"></span>
+        <span class="rolo-card back1"></span>
+        <span class="rolo-card front">
+          <span class="rolo-line">RESEARCH</span>
+          <span class="rolo-sub">UChicago · Michigan · USD · Northwestern</span>
+          <span class="rolo-holes"><i></i><i></i></span>
+        </span>
+        <span class="rolo-spindle"></span>
+      </button>
+
+      <!-- Awards: medals & ribbons in a tray -->
+      <button class="obj medals" data-open="awards" data-drag="true"
+              style="--home-x: 50%; --home-y: 80%;" aria-label="Awards — medals and ribbons">
+        <span class="medal m-gold"></span>
+        <span class="medal m-silver"></span>
+        <span class="medal m-seal"></span>
+        <span class="medals-label">— awards —</span>
+      </button>
+
+      <!-- Business-card tray: contact -->
+      <button class="obj cardtray" data-open="contact" data-drag="true"
+              style="--home-x: 78%; --home-y: 76%;" aria-label="Contact — business card">
+        <span class="bcard">
+          <span class="bcard-name">ETHAN XIE</span>
+          <span class="bcard-rule"></span>
+          <span class="bcard-line">ethanxie@udel.edu</span>
+          <span class="bcard-line">— get in touch —</span>
+        </span>
+      </button>
+
+      <!-- Pinned index card: skills -->
+      <button class="obj skillcard" data-open="skills" data-drag="true"
+              style="--home-x: 88%; --home-y: 55%;" aria-label="Skills — index card">
+        <span class="pin"></span>
+        <span class="idx-rule"></span>
+        <span class="idx-head">TOOLBOX</span>
+        <span class="idx-body">Python · R · OCaml · Three.js · Stata · Bloomberg …</span>
+      </button>
+
+      <!-- Ambient props -->
+      <span class="prop coffee-ring" aria-hidden="true"></span>
+      <span class="prop fountain-pen" aria-hidden="true"></span>
+
+    </div>
+  </main>
+
+  <!-- Chrome lives outside the transformed desk so position:fixed is viewport-relative -->
+  <button class="tidy" id="tidy" aria-label="Tidy the desk — return everything to its place">↺ tidy desk</button>
+  <button class="mute" id="mute" aria-pressed="false" aria-label="Toggle desk sounds">♪ sound: off</button>
+
+  <!-- Reading overlay: an object lifts into focus, the desk dims behind it -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="overlay-backdrop" id="overlayBackdrop"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Detail">
+      <button class="sheet-close" id="sheetClose" aria-label="Close">put it back ✕</button>
+      <div class="sheet-body" id="sheetBody"></div>
+    </div>
+  </div>
+
+  <!-- A whisper of instruction that fades once you start touching things -->
+  <p class="hint" id="hint">pick things up · pull the lamp chain · open anything</p>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

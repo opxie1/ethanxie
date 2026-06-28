@@ -1,0 +1,7 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# dependencies (none currently — this is a zero-dependency static site)
+node_modules/
