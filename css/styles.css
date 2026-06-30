@@ -648,8 +648,11 @@ body:not(.is-loading) .obj { animation: drop 1s var(--ease-thud) both; }
 .sk-h{ font-family:"Special Elite",monospace; font-size:12px; letter-spacing:.14em; color:#8a3b34; }
 
 /* ============================================================ MOBILE ===== */
+/* Fall back to the readable document only on genuinely NARROW screens.
+   (Do NOT key off pointer:coarse — that wrongly hides the desk on any
+   touchscreen laptop, which is a normal wide-screen computer.) */
 .mobile-fallback{ display:none; }
-@media (max-width: 880px), (pointer: coarse) {
+@media (max-width: 760px) {
   body{ overflow:auto; background:#1a1009; }
   .stage, .room-light, .vignette, .dust, .tidy, .mute, .hint { display:none !important; }
   .mobile-fallback{
